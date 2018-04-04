@@ -1,5 +1,19 @@
+// Init storage
+
+const storage = new Storage()
+
+// Get stored location data
+
+const weatherLocation = storage.getLocationData()
+
+
+
+
 // Init weather object
-const weather = new Weather('Boston', 'MA')
+const weather = new Weather(weatherLocation.city, weatherLocation.state)
+
+// const weather = new Weather('London', 'England')
+
 
 // Init UI
 const ui = new UI()
@@ -15,6 +29,8 @@ document.getElementById('w-change-btn').addEventListener('click', (e) => {
 
   weather.changeLocation(city, state)
 
+  storage.setLocationData(city, state)
+
   // Get and display weather
   getWeather()
 
@@ -29,6 +45,7 @@ function getWeather(){
 
   weather.getWeather()
   .then(results => {
+    
     ui.paint(results)
   })
   .catch(err => console.log(err))
